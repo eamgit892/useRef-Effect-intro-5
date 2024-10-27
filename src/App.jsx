@@ -1,41 +1,23 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useRef } from 'react'
 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-import axios from 'axios'
-
-import PostWithComment from './components/PostWithComment'
-
 export default function App() {
 
-  const [posts, setPosts] = useState([]);
+  const [state, setState] = useState([]);
 
-  useEffect(()=> {
-    try {
-      const getResponse = (r) => r.data;
-      Promise.all([axios.get("https://jsonplaceholder.typicode.com/posts").then(getResponse),  
-                   axios.get("https://jsonplaceholder.typicode.com/comments").then(getResponse)
-                  ])
-          .then( values => {
-                  const [p, c] = values
-                  let cp = []
+  const firstName = useRef();
+  const lastName  = useRef();
+  const email     = useRef();
 
-                  for (let post of p) {
-                      let postId = post.id;
-                      let relatedComments = c.filter(celem => celem.postId == postId).slice();
-                      cp.push({ ...post, relatedComments: relatedComments });
-                  }
-                  setPosts(cp)
-          })
-           
-    }catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }, []) // run once 
-
+  const saveInputsToState = () => {
+      setState([firstName.current.value, lastName.current.value, email.current.value])
+  }
+  
   return (
     <>
       <div>
@@ -46,12 +28,16 @@ export default function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Posts & Comments</h1>
+      <h1>Three inputs</h1>
       <p>by Yevhen Mozoliak</p>
-      <div className="cards-container">
-        {
-          posts.map(p => <PostWithComment post={p}/>)
-        }
+
+      <div className="input-wrapper">
+        <input ref={firstName} type="text" placeholder='First name'/>
+        <input ref={lastName}  type="text" placeholder='Last name'/> 
+        <input ref={email}     type="text" placeholder='email'/> 
+        <button
+        onClick={saveInputsToState}
+        >Save to state</button>
       </div>
     </>
   )
