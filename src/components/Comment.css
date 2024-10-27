@@ -1,0 +1,15 @@
+hr {
+    width: 50%;
+    text-align: left;
+    position: relative;
+    left: -3.5rem;
+}
+
+
+.comment {
+    margin: 0.3rem 0.8rem;
+    border: solid 1px gray;
+    border-radius: 5px;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
