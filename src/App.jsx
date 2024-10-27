@@ -8,15 +8,24 @@ import './App.css'
 
 export default function App() {
 
-  const [state, setState] = useState([]);
+  const getTimeString = () => {
+    let t = new Date();
+    let hh = t.getHours(),
+        mm = t.getMinutes(), 
+        ss = t.getSeconds(); 
 
-  const firstName = useRef();
-  const lastName  = useRef();
-  const email     = useRef();
-
-  const saveInputsToState = () => {
-      setState([firstName.current.value, lastName.current.value, email.current.value])
+    return `${hh}:${mm}:${ss}`
   }
+
+  const [time, setTime] = useState(getTimeString());
+
+  useEffect(() => {
+    let timer = setInterval(() => {
+        setTime(getTimeString())
+    }, 1000)
+    return () => clearInterval(timer);
+  });
+  
   
   return (
     <>
@@ -28,16 +37,11 @@ export default function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Three inputs</h1>
+      <h1>useEffect updater</h1>
       <p>by Yevhen Mozoliak</p>
 
       <div className="input-wrapper">
-        <input ref={firstName} type="text" placeholder='First name'/>
-        <input ref={lastName}  type="text" placeholder='Last name'/> 
-        <input ref={email}     type="text" placeholder='email'/> 
-        <button
-        onClick={saveInputsToState}
-        >Save to state</button>
+        <p>{time}</p>
       </div>
     </>
   )
