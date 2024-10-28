@@ -6,6 +6,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import ShowTime from './ShowTime'
+
 export default function App() {
 
   const getTimeString = () => {
@@ -37,12 +39,13 @@ export default function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>useEffect updater</h1>
+      <h1>Changing props example</h1>
       <p>by Yevhen Mozoliak</p>
 
       <div className="input-wrapper">
         <p>{time}</p>
       </div>
+      <ShowTime hours={time}/>
     </>
   )
 }
